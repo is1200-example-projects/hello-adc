@@ -6,7 +6,7 @@ IO-shield.
 
 ## Prerequisites
 You need the following to compile and test hello leds:
- - Chipkit Uno32 with bootloader. The bootloader already be installed on a
+ - Chipkit Uno32 with bootloader. The bootloader is already installed on a
    stock unit. If you need to install a bootloader, see the document
    [Installing the bootloader](https://github.com/is1200-example-projects/pic32-toolchain/blob/master/doc/install-bootloader.md)
  - [Pic32 Toolchain](https://github.com/is1200-example-projects/pic32-toolchain)
