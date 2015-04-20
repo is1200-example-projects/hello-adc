@@ -39,7 +39,7 @@ int main(void) {
 		while(!AD1CON1bits.SAMP);
 		while(!AD1CON1bits.DONE);
 		
-		/* Get the value */
+		/* Get the analog value */
 		speed = ADC1BUF0;
 		
 		PORTE = sweep;
