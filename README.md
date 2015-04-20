@@ -1,4 +1,4 @@
-# Hello adc
+# Hello ADC
 Sample program for the Chipkit Uno32 with IO-shield. This program tests the
 analog-to-digital converter. When running, the LEDs on the IO-shield will flash
 in sequence. The flashing speed is controlled by the trim potentiometer on the
