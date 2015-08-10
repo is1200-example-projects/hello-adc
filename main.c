@@ -1,7 +1,7 @@
-#include <proc/p32mx320f128h.h>
+#include <pic32mx.h>
 
 void delay(int cyc) {
-	int i;
+	volatile int i;
 	for(i = cyc; i > 0; i--);
 }
 
@@ -13,31 +13,28 @@ int main(void) {
 	AD1PCFG = ~(1 << 2);
 	TRISBSET = (1 << 2);
 	/* Use pin 2 for positive */
-	AD1CHSbits.CH0SA = 0x2;
-	/* Set negative reference*/
-	AD1CHSbits.CH0NA = 0x0;
+	AD1CHS = (0x2 << 16);
 	
-	/* Data format in uint32, 0 - 1024 */
-	AD1CON1bits.FORM = 0x4;
-	/* Manual sampling, auto conversion when sampling is done */
-	AD1CON1bits.SSRC = 0x7;
-	AD1CON1bits.CLRASAM = 0x0;
-	AD1CON1bits.ASAM = 0x0;
+	/* Data format in uint32, 0 - 1024
+	Manual sampling, auto conversion when sampling is done
+	FORM = 0x4; SSRC = 0x7; CLRASAM = 0x0; ASAM = 0x0; */
+	AD1CON1 = (0x4 << 8) | (0x7 << 5);
+	
 	AD1CON2 = 0x0;
-	AD1CON3bits.ADRC = 0x1;
+	AD1CON3 |= (0x1 << 15);
 	
 	/* Set up output pins */
 	ODCE = 0x0;
 	TRISECLR = 0xFF;
 	
 	/* Turn on ADC */
-	AD1CON1bits.ON = 0x1;
+	AD1CON1 |= (0x1 << 15);
 	
 	for(;;) {
 		/* Start sampling, wait until conversion is done */
-		AD1CON1bits.SAMP = 0x1;
-		while(!AD1CON1bits.SAMP);
-		while(!AD1CON1bits.DONE);
+		AD1CON1 |= (0x1 << 1);
+		while(!(AD1CON1 & (0x1 << 1)));
+		while(!(AD1CON1 & 0x1));
 		
 		/* Get the analog value */
 		speed = ADC1BUF0;
